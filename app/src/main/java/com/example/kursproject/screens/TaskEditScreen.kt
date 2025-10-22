@@ -91,7 +91,7 @@ fun TaskEditScreen(
                                 )
                             )
                         } else {
-                            viewModel.addTask(title, description, priority)
+                            viewModel.addTask(title, description, priority,dueDate)
                         }
                         onBack()
                     }

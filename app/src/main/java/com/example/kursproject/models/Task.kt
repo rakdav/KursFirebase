@@ -6,7 +6,7 @@ data class Task(
     val description: String = "",
     val priority: Priority = Priority.MEDIUM,
     val dueDate: String = "",
-    val isCompleted: Boolean = false,
+    var isCompleted: Boolean = false,
     val createdAt: String = "",
     val updatedAt: String = ""
 ) {

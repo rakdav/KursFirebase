@@ -51,14 +51,15 @@ class TaskViewModel: ViewModel() {
             }
         }
     }
-    fun addTask(title: String, description: String, priority: Task.Priority) {
+    fun addTask(title: String, description: String, priority: Task.Priority,dueDate: String) {
         viewModelScope.launch {
             _isLoading.value = true
             try {
                 val newTask = Task(
                     title = title,
                     description = description,
-                    priority = priority
+                    priority = priority,
+                    dueDate = dueDate
                 )
                 repository.addTask(newTask)
                 _errorMessage.value = null

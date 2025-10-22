@@ -87,7 +87,9 @@ fun TaskListScreen(
                     { task ->
                         TaskItem(
                             task = task,
-                            onToggleComplete = { viewModel.toggleTaskCompletion(task) },
+                            onToggleComplete = {
+                                viewModel.toggleTaskCompletion(task)
+                                               },
                             onEdit = { onEditTask(task) },
                             onDelete = { viewModel.deleteTask(task.id) })
                     }
@@ -197,3 +199,4 @@ fun PriorityChip(priority: Task.Priority) {
         )
     }
 }
+
