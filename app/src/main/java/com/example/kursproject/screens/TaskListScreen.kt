@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -25,7 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -64,13 +67,13 @@ fun TaskListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton (onClick = onAddTask) {
+            FloatingActionButton(onClick = onAddTask) {
                 Icon(Icons.Default.Add, contentDescription = "Добавить задачу")
             }
         }
     )
     {
-        padding->
+            padding ->
         Box(modifier = Modifier.padding(padding))
         {
             if (isLoading) {
@@ -78,7 +81,7 @@ fun TaskListScreen(
             }
             else
             {
-                LazyColumn (modifier = Modifier.fillMaxSize())
+                LazyColumn(modifier = Modifier.fillMaxSize())
                 {
                     items(tasks)
                     { task ->
@@ -90,56 +93,80 @@ fun TaskListScreen(
                     }
                 }
             }
+            errorMessage?.let { message ->
+                Snackbar(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    action = {
+                        TextButton(onClick = { viewModel.clearError() }) {
+                            Text("OK")
+                        }
+                    }
+                )
+                {
+                    Text(message)
+                }
+            }
         }
-
     }
 }
+
 @Composable
 fun TaskItem(
     task: Task,
     onToggleComplete: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit
-)
-{
-    Card (
+) {
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)){
-        Column (
+            .padding(8.dp)) {
+        Row (
             modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 8.dp)
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = task.title,
-                style = MaterialTheme.typography.headlineSmall,
-                textDecoration = if (task.isCompleted) TextDecoration.LineThrough else
-                    TextDecoration.None
+            Checkbox(
+                checked = task.isCompleted,
+                onCheckedChange = { onToggleComplete() }
             )
-            if (task.description.isNotBlank()) {
-                Text(
-                    text = task.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
 
-            Row (
-                modifier = Modifier.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Column (
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 8.dp)
             ) {
-                PriorityChip(priority = task.priority)
-                Spacer(modifier = Modifier.width(8.dp))
-                if (task.dueDate.isNotBlank()) {
+                Text(
+                    text = task.title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    textDecoration = if (task.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                )
+                if (task.description.isNotBlank()) {
                     Text(
-                        text = task.dueDate,
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        text = task.description,
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
+
+                Row(
+                    modifier = Modifier.padding(top = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    PriorityChip(priority = task.priority)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    if (task.dueDate.isNotBlank()) {
+                        Text(
+                            text = task.dueDate,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        )
+                    }
+                }
             }
+
             IconButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = "Редактировать")
             }
