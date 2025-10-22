@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "102496182275",
+    "project_id": "kursproject-e5edc",
+    "storage_bucket": "kursproject-e5edc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102496182275:android:152d6ffddc64776dcf2e36",
+        "android_client_info": {
+          "package_name": "com.example.kursproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXERwQ7VbfMBSMoj7rz59YjJ3LuH4BUGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
