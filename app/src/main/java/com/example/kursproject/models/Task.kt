@@ -13,7 +13,6 @@ data class Task(
     enum class Priority {
         LOW, MEDIUM, HIGH
     }
-
     companion object {
         const val PRIORITY_LOW = "LOW"
         const val PRIORITY_MEDIUM = "MEDIUM"

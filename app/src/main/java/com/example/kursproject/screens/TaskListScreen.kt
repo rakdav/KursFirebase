@@ -127,6 +127,10 @@ fun TaskItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Checkbox(
+                checked = task.isCompleted,
+                onCheckedChange = { onToggleComplete() }
+            )
             Column (
                 modifier = Modifier
                     .weight(1f)
